@@ -54,8 +54,7 @@ Simple leaderboard tracking user performance.
 
 | Column | Type | Constraints | Description |
 |--------|------|-------------|-------------|
-| id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Unique record identifier |
-| user_id | uuid | FOREIGN KEY → users(id) | Reference to user |
+| user_id | uuid | PRIMARY KEY, FOREIGN KEY → users(id) | Reference to user |
 | created_at | timestamptz | DEFAULT now() | Record creation timestamp |
 | updated_at | timestamptz | DEFAULT now() | Last update timestamp |
 
