@@ -14,7 +14,6 @@ cd flask-react-app
 
 # 2. Run setup (choose your platform)
 npm run setup        # Mac/Linux
-npm run setup:win    # Windows
 
 # 3. Start development
 npm run dev
