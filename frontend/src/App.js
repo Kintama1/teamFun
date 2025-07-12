@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import AuthWrapper from './components/AuthWrapper';
 import HomePage from './components/HomePage';
+import About from './components/About';
+import HowItWorks from './components/HowItWorks';
+import SelectTeam from './components/SelectTeam';
+import Profile from './components/Profile';
+import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 
 function App() {
@@ -44,19 +50,46 @@ function App() {
 
   return (
     <div className="App">
-      {/* Always show navbar */}
+      {/* Always show navbar - single source of truth */}
       <Navbar 
         user={user} 
         onLoginClick={handleLoginClick} 
         onLogout={handleLogout} 
       />
       
-      {/* Main content */}
-      <HomePage 
-        user={user} 
-        onLogout={handleLogout} 
-        onLoginClick={handleLoginClick}
-      />
+      {/* Main content - now using Routes instead of just HomePage */}
+      <Routes>
+        <Route 
+          path="/" 
+          element={
+            <HomePage 
+              user={user} 
+              onLogout={handleLogout} 
+              onLoginClick={handleLoginClick}
+            />
+          } 
+        />
+        <Route path="/about" element={<About />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        
+        {/* Protected Routes */}
+        <Route 
+          path="/select-team" 
+          element={
+            <ProtectedRoute user={user} onLoginClick={handleLoginClick}>
+              <SelectTeam user={user} />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/profile" 
+          element={
+            <ProtectedRoute user={user} onLoginClick={handleLoginClick}>
+              <Profile user={user} />
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
       
       {/* Auth Modal - only show when needed */}
       {showAuthModal && (

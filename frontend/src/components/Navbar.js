@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = ({ user, onLoginClick, onLogout }) => {
@@ -22,7 +23,9 @@ const Navbar = ({ user, onLoginClick, onLogout }) => {
       <div className="navbar-container">
         {/* Logo/Brand */}
         <div className="navbar-brand">
-          <h2>Stock League</h2>
+          <Link to="/">
+            <h2>Stock League</h2>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
@@ -30,14 +33,14 @@ const Navbar = ({ user, onLoginClick, onLogout }) => {
           {user ? (
             // Logged-in navigation
             <div className="navbar-nav">
-              <a href="/" className="nav-link">Home</a>
-              <a href="/select-team" className="nav-link">Select Stock Team</a>
+              <Link to="/" className="nav-link">Home</Link>
+              <Link to="/select-team" className="nav-link">Select Stock Team</Link>
               <div className="nav-dropdown">
                 <span className="nav-link dropdown-toggle">Private Leagues</span>
                 <div className="dropdown-menu">
-                  <a href="/create-league" className="dropdown-item">Create League</a>
-                  <a href="/join-league" className="dropdown-item">Join League</a>
-                  <a href="/my-leagues" className="dropdown-item">My Leagues</a>
+                  <Link to="/create-league" className="dropdown-item">Create League</Link>
+                  <Link to="/join-league" className="dropdown-item">Join League</Link>
+                  <Link to="/my-leagues" className="dropdown-item">My Leagues</Link>
                 </div>
               </div>
               <div className="nav-dropdown">
@@ -45,8 +48,8 @@ const Navbar = ({ user, onLoginClick, onLogout }) => {
                   {user.name}
                 </span>
                 <div className="dropdown-menu">
-                  <a href="/profile" className="dropdown-item">Profile</a>
-                  <a href="/settings" className="dropdown-item">Settings</a>
+                  <Link to="/profile" className="dropdown-item">Profile</Link>
+                  <Link to="/settings" className="dropdown-item">Settings</Link>
                   <button 
                     onClick={handleLogout} 
                     className="dropdown-item logout-btn"
@@ -59,9 +62,9 @@ const Navbar = ({ user, onLoginClick, onLogout }) => {
           ) : (
             // Logged-out navigation
             <div className="navbar-nav">
-              <a href="/" className="nav-link">Home</a>
-              <a href="/about" className="nav-link">About</a>
-              <a href="/how-it-works" className="nav-link">How it Works</a>
+              <Link to="/" className="nav-link">Home</Link>
+              <Link to="/about" className="nav-link">About</Link>
+              <Link to="/how-it-works" className="nav-link">How it Works</Link>
               <button 
                 onClick={onLoginClick} 
                 className="nav-btn login-btn"
@@ -93,32 +96,32 @@ const Navbar = ({ user, onLoginClick, onLogout }) => {
         {user ? (
           // Logged-in mobile menu
           <div className="mobile-nav">
-            <a href="/" className="mobile-nav-link" onClick={closeMobileMenu}>
+            <Link to="/" className="mobile-nav-link" onClick={closeMobileMenu}>
               Home
-            </a>
-            <a href="/select-team" className="mobile-nav-link" onClick={closeMobileMenu}>
+            </Link>
+            <Link to="/select-team" className="mobile-nav-link" onClick={closeMobileMenu}>
               Select Stock Team
-            </a>
+            </Link>
             <div className="mobile-dropdown">
               <span className="mobile-dropdown-title">Private Leagues</span>
-              <a href="/create-league" className="mobile-nav-link sub" onClick={closeMobileMenu}>
+              <Link to="/create-league" className="mobile-nav-link sub" onClick={closeMobileMenu}>
                 Create League
-              </a>
-              <a href="/join-league" className="mobile-nav-link sub" onClick={closeMobileMenu}>
+              </Link>
+              <Link to="/join-league" className="mobile-nav-link sub" onClick={closeMobileMenu}>
                 Join League
-              </a>
-              <a href="/my-leagues" className="mobile-nav-link sub" onClick={closeMobileMenu}>
+              </Link>
+              <Link to="/my-leagues" className="mobile-nav-link sub" onClick={closeMobileMenu}>
                 My Leagues
-              </a>
+              </Link>
             </div>
             <div className="mobile-dropdown">
               <span className="mobile-dropdown-title">{user.name}</span>
-              <a href="/profile" className="mobile-nav-link sub" onClick={closeMobileMenu}>
+              <Link to="/profile" className="mobile-nav-link sub" onClick={closeMobileMenu}>
                 Profile
-              </a>
-              <a href="/settings" className="mobile-nav-link sub" onClick={closeMobileMenu}>
+              </Link>
+              <Link to="/settings" className="mobile-nav-link sub" onClick={closeMobileMenu}>
                 Settings
-              </a>
+              </Link>
               <button 
                 onClick={handleLogout} 
                 className="mobile-nav-link sub logout-btn"
@@ -130,15 +133,15 @@ const Navbar = ({ user, onLoginClick, onLogout }) => {
         ) : (
           // Logged-out mobile menu
           <div className="mobile-nav">
-            <a href="/" className="mobile-nav-link" onClick={closeMobileMenu}>
+            <Link to="/" className="mobile-nav-link" onClick={closeMobileMenu}>
               Home
-            </a>
-            <a href="/about" className="mobile-nav-link" onClick={closeMobileMenu}>
+            </Link>
+            <Link to="/about" className="mobile-nav-link" onClick={closeMobileMenu}>
               About
-            </a>
-            <a href="/how-it-works" className="mobile-nav-link" onClick={closeMobileMenu}>
+            </Link>
+            <Link to="/how-it-works" className="mobile-nav-link" onClick={closeMobileMenu}>
               How it Works
-            </a>
+            </Link>
             <button 
               onClick={() => { onLoginClick(); closeMobileMenu(); }} 
               className="mobile-nav-btn login-btn"
