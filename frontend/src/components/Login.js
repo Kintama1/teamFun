@@ -20,6 +20,8 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
+  setLoading(true);
+  setError(''); // Clear previous errors
   
   try {
     const response = await fetch('http://localhost:5000/api/auth/login', {
@@ -40,13 +42,16 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
       // Redirect to homepage
       onLoginSuccess(data.user);
     } else {
-      // Show error message
-      setError(data.message);
+      // Show error message from backend
+      setError(data.error || 'Login failed. Please try again.');
     }
   } catch (error) {
     setError('Network error. Please try again.');
+  } finally {
+    setLoading(false);
   }
 };
+
   return (
     <div className="auth-container">
       <div className="auth-form">
@@ -79,10 +84,19 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
               required
             />
           </div>
+          {error && (
+            <div className="error-message">
+                {error}
+            </div>
+            )}
           
-          <button type="submit" className="auth-btn primary">
-            Sign In
-          </button>
+          <button 
+                type="submit" 
+                className="auth-btn primary"
+                disabled={loading}
+                >
+                {loading ? 'Signing In...' : 'Sign In'}
+                </button>
         </form>
         
         <div className="auth-footer">

@@ -125,6 +125,7 @@ def login():
             'password': password
         })
         
+        # Check if login was successful
         if response.user and response.session:
             # Get user data from our users table
             user_data = supabase.table('users').select('*').eq('id', response.user.id).execute()
@@ -137,14 +138,27 @@ def login():
             
             return jsonify({
                 'message': 'Login successful',
-                'user': user_info,  # Frontend expects 'user' object
-                'token': response.session.access_token  # Frontend expects 'token' not 'access_token'
+                'user': user_info,
+                'token': response.session.access_token
             }), 200
         else:
-            return jsonify({'error': 'Invalid credentials'}), 401
+            # This handles cases where Supabase returns a response but no user/session
+            return jsonify({'error': 'Invalid email or password'}), 401
             
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        # Log the actual error for debugging (you can remove this in production)
+        print(f"Login error: {str(e)}")
+        
+        # Check for specific Supabase auth errors
+        error_message = str(e).lower()
+        
+        if any(phrase in error_message for phrase in ['invalid', 'credentials', 'password', 'email']):
+            return jsonify({'error': 'Invalid email or password'}), 401
+        elif 'network' in error_message:
+            return jsonify({'error': 'Network error. Please try again.'}), 503
+        else:
+            # Generic error message for any other issues
+            return jsonify({'error': 'Login failed. Please try again.'}), 500
 
 @auth_bp.route('/logout', methods=['POST'])
 def logout():
