@@ -56,7 +56,6 @@ Simple leaderboard tracking user performance.
 |--------|------|-------------|-------------|
 | id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Unique record identifier |
 | user_id | uuid | FOREIGN KEY → users(id) | Reference to user |
-| points | integer | DEFAULT 0, NOT NULL | Total points earned |
 | created_at | timestamptz | DEFAULT now() | Record creation timestamp |
 | updated_at | timestamptz | DEFAULT now() | Last update timestamp |
 
