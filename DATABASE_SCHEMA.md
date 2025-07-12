@@ -27,9 +27,9 @@ User's fantasy stock teams and portfolio information.
 | id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Unique team identifier |
 | user_id | uuid | FOREIGN KEY → users(id) | Owner of the team |
 | team_name | varchar | NOT NULL | Name of the fantasy team |
-| stock_1 | varchar | | First stock symbol |
-| stock_2 | varchar | | Second stock symbol |
-| stock_3 | varchar | | Third stock symbol |
+| stock_1_id | uuid | FOREIGN KEY → stocks(id) | First stock selection |
+| stock_2_id | uuid | FOREIGN KEY → stocks(id) | Second stock selection |
+| stock_3_id | uuid | FOREIGN KEY → stocks(id) | Third stock selection |
 | points | integer | DEFAULT 0 | Team's total points |
 | prev_points | integer | DEFAULT 0 | Team's previous points |
 | cash_balance | numeric | DEFAULT 10000.00 | Available cash for trades |
@@ -66,6 +66,11 @@ users (1) ←→ (many) teams
 
 users (1) ←→ (many) leaderboard
   └─ users.id = leaderboard.user_id
+
+stocks (1) ←→ (many) teams
+  └─ stocks.id = teams.stock_1_id
+  └─ stocks.id = teams.stock_2_id
+  └─ stocks.id = teams.stock_3_id
 ```
 
 ## API Endpoints
