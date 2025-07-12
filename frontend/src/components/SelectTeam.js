@@ -100,11 +100,11 @@ const SelectTeam = ({ user }) => {
         const team = await response.json();
         if (team) {
           setCurrentTeam(team);
-          // Set selected stocks from current team
+          // Set selected stocks from current team using stock IDs
           const teamStocks = [
-            stocks.find(s => s.symbol === team.stock_1),
-            stocks.find(s => s.symbol === team.stock_2),
-            stocks.find(s => s.symbol === team.stock_3)
+            stocks.find(s => s.id === team.stock_1_id),
+            stocks.find(s => s.id === team.stock_2_id),
+            stocks.find(s => s.id === team.stock_3_id)
           ];
           setSelectedStocks(teamStocks);
         }
@@ -171,9 +171,9 @@ const SelectTeam = ({ user }) => {
       const teamData = {
         user_id: user.id,
         team_name: `${user.username || user.name}'s Team`,
-        stock_1: selectedStocks[0].symbol,
-        stock_2: selectedStocks[1].symbol,
-        stock_3: selectedStocks[2].symbol
+        stock_1_id: selectedStocks[0].id,
+        stock_2_id: selectedStocks[1].id,
+        stock_3_id: selectedStocks[2].id
       };
 
       const response = await fetch('http://localhost:5000/api/teams', {
@@ -217,9 +217,9 @@ const SelectTeam = ({ user }) => {
               <p><strong>Team Name:</strong> {currentTeam.team_name}</p>
               <p><strong>Points:</strong> {currentTeam.points}</p>
               <div className="current-stocks">
-                <span>{currentTeam.stock_1}</span>
-                <span>{currentTeam.stock_2}</span>
-                <span>{currentTeam.stock_3}</span>
+                {selectedStocks[0] && <span>{selectedStocks[0].symbol}</span>}
+                {selectedStocks[1] && <span>{selectedStocks[1].symbol}</span>}
+                {selectedStocks[2] && <span>{selectedStocks[2].symbol}</span>}
               </div>
             </div>
           </div>
