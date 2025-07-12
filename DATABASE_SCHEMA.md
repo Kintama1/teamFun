@@ -31,6 +31,7 @@ User's fantasy stock teams and portfolio information.
 | stock_2 | varchar | | Second stock symbol |
 | stock_3 | varchar | | Third stock symbol |
 | points | integer | DEFAULT 0 | Team's total points |
+| prev_points | integer | DEFAULT 0 | Team's previous points |
 | cash_balance | numeric | DEFAULT 10000.00 | Available cash for trades |
 | created_at | timestamptz | DEFAULT now() | Team creation timestamp |
 | updated_at | timestamptz | DEFAULT now() | Last update timestamp |
@@ -54,7 +55,7 @@ Simple leaderboard tracking user performance.
 | Column | Type | Constraints | Description |
 |--------|------|-------------|-------------|
 | id | uuid | PRIMARY KEY, DEFAULT gen_random_uuid() | Unique record identifier |
-| username | varchar | NOT NULL | Player's username |
+| user_id | uuid | FOREIGN KEY → users(id) | Reference to user |
 | points | integer | DEFAULT 0, NOT NULL | Total points earned |
 | created_at | timestamptz | DEFAULT now() | Record creation timestamp |
 | updated_at | timestamptz | DEFAULT now() | Last update timestamp |
@@ -64,6 +65,9 @@ Simple leaderboard tracking user performance.
 ```
 users (1) ←→ (many) teams
   └─ users.id = teams.user_id
+
+users (1) ←→ (many) leaderboard
+  └─ users.id = leaderboard.user_id
 ```
 
 ## API Endpoints
@@ -76,5 +80,5 @@ users (1) ←→ (many) teams
 - `GET /me` - Get current user info (requires auth)
 
 ### Base URL
-- **Development**: `http://localhost:8000`
+- **Development**: `http://localhost:5000`
 - **Frontend**: `http://localhost:3000` 
